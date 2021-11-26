@@ -8,6 +8,12 @@ const fsObj = {
             console.log('Folder created')
         })
     },
+    writeFile: function () {
+        fs.writeFile(path.join(__dirname, 'notes', './test/test.file'), err => {
+            if (err) throw err
+            console.log('Folder writes')
+        })
+    }
 
 }
 
