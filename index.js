@@ -9,10 +9,33 @@ const http = require('http');
 
 const server = http.createServer((req, res)=>{
 
-    res.write('aassasasas');
-    res.end(`
-        <div>fekljfeifjer</div>
-`);
+    if(req.method === 'GET'){
+        res.writeHead(200, {
+            'Content-Type': 'text/html'
+        })
+        res.end( `<h1>form</h1>
+        <form method="post" action="/">
+            <input type="text" name="title">
+            <button type="submit"> Send </button>
+        </form>`)
+    } else if (req.method === 'POST'){
+        const body = [];
+
+        req.on('data', data =>{
+            body.push(Buffer.from(data));
+            console.log(data, 'data');
+        })
+
+        req.on('end', () =>{
+            console.log(body.toString());
+        })
+
+        res.end(`
+        
+            <h1> Message send </h1>
+        
+        `)
+    }
 
 })
 
