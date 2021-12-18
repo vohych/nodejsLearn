@@ -1,0 +1,13 @@
+<h1> Courses </h1>
+{{#if courses.length}}
+<ul>
+    {{#each courses}}
+        <li> <strong>name:</strong> {{#if this.name}}{{this.name }}{{/if}}{{#if this.title}}<strong>, title:</strong> {{this.title}}{{/if}}{{#if this.price}}<strong>, price: </strong> {{this.price}}{{/if}}</li>
+    {{/each}}
+
+</ul>
+{{else}}
+<p>
+    Empty
+</p>
+{{/if}}

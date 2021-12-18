@@ -1,0 +1,9 @@
+<div class="list" *ngFor="let course of courses">
+
+  <a routerLink="/course/{{course._id}}">
+    <span *ngIf="course.name"><strong> Name: </strong> {{course.name}}</span>
+    <span *ngIf="course.title"><strong> Title: </strong> {{course.title}}</span>
+    <span *ngIf="course.price"><strong> Price: </strong> {{course.price}}</span>
+  </a>
+
+</div>

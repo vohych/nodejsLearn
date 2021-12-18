@@ -1,0 +1,8 @@
+<div>
+    <p>
+      <span *ngIf="this.name"><strong> Name: </strong> {{this.name}}</span>
+      <span *ngIf="this.title"><strong> Title: </strong> {{this.title}}</span>
+      <span *ngIf="this.price"><strong> Price: </strong> {{this.price}}</span>
+      <a routerLink="/edit/{{this.uuid}}">Edit</a>
+    </p>
+</div>
