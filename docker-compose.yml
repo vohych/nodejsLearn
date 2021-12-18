@@ -1,0 +1,41 @@
+version: '3.7'
+
+volumes:
+  node_modules_be:
+  node_modules_fe:
+  mongo_data:
+
+services:
+  frontend:
+    container_name: learn_front
+    build:
+      context: ./learn-front
+      dockerfile: ./Dockerfile
+    ports:
+      - "4200:4200"
+    volumes:
+      - ./learn-front/src:/var/www/src
+      - node_modules_fe:/var/www/node_modules
+
+  node:
+    container_name: learn_node
+    build:
+      context: ./node
+      dockerfile: ./Dockerfile
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./node:/var/www
+      - node_modules_be:/var/www/node_modules
+
+  mongo_db:
+    container_name: mongo_db
+    image: mongo:5.0
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: root_password
