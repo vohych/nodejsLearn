@@ -6,11 +6,11 @@ import {HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './header/header.component';
 import {CourseComponent} from './course/course.component';
 import { HomeComponent } from './home/home.component';
-import { CreateComponent } from './create/create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EditCourseComponent} from "./edit-course/edit-course.component";
 import {CommonModule} from "@angular/common";
 import { CreateCourseComponent } from './create-course/create-course.component';
+import { StrongSearchComponent } from './strong-search/strong-search.component';
 
 @NgModule({
   declarations: [
@@ -18,9 +18,9 @@ import { CreateCourseComponent } from './create-course/create-course.component';
     HeaderComponent,
     CourseComponent,
     HomeComponent,
-    CreateComponent,
     EditCourseComponent,
     CreateCourseComponent,
+    StrongSearchComponent,
   ],
   imports: [
     BrowserModule,

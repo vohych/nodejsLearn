@@ -36,9 +36,14 @@ class CourseRepository {
         return Course.findById(id);
     }
 
-    static async postOneById(id, name, title, price) {
+    static async updateOneById(id, name, title, price) {
         await this.connect();
         await Course.findOne({_id: id}).updateOne({name, title, price});
+    }
+
+    static async deleteOneById(id) {
+        await this.connect();
+        await Course.findOne({_id: id}).deleteOne();
     }
 
     static strongSearch(){

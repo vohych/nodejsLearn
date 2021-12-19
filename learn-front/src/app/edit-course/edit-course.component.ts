@@ -29,5 +29,8 @@ export class EditCourseComponent implements OnInit {
     this.service.sendData(this.form.value).subscribe();
   }
 
+  public deleteCourse() {
+    this.service.delete().subscribe();
+  }
 }
 

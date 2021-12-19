@@ -53,4 +53,8 @@ export class EditFormService {
 
   }
 
+  delete(){
+    return this.http.delete(`http://localhost:8080/api/delete/${this.uuid}`)
+  }
+
 }

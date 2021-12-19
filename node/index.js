@@ -224,6 +224,7 @@ const apiString = '/api/';
 const get_all = apiString + 'get-all',
     get_one = apiString + 'get-one',
     update_one = apiString + 'edit/:uid',
+    delete_one = apiString + 'delete/:uid',
     create_one = apiString + 'create'
 
 const apiList = {
@@ -231,6 +232,7 @@ const apiList = {
     get_one,
     update_one,
     create_one,
+    delete_one,
 }
 
 app.get('/', (req, res) => {
@@ -260,15 +262,29 @@ app.post(update_one, (req, res) => {
     const name = req.body.name;
     const title = req.body.title;
     const price = req.body.price;
-    CourseRepository.postOneById(req.params.uid, name, title, price).then();
+    CourseRepository.updateOneById(req.params.uid, name, title, price).then();
     return res.status(200);
 })
 
 app.post(create_one, (req, res, body) => {
     if (!req.body) return res.sendStatus(400);
     res.send(req.body);
-    console.log(req.body.name)
     CourseRepository.createOne(req.body.name, req.body.title, req.body.price).then();
+    return res.status(200);
+})
+
+
+app.post(create_one, (req, res, body) => {
+    if (!req.body) return res.sendStatus(400);
+    res.send(req.body);
+    CourseRepository.deleteOneById(req.body.name).then();
+    return res.status(200);
+})
+
+app.delete(delete_one, (req, res)=>{
+    if (!req.body) return res.sendStatus(400);
+    res.send(req.body);
+    CourseRepository.deleteOneById(req.params.uid).then();
     return res.status(200);
 })
 
