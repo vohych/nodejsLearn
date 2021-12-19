@@ -201,35 +201,36 @@ const CourseRepository = require('./custom_modules/CourseRepository');
 const express = require('express');
 const cors = require('cors');
 const app = express();
-const {Router} = require("express");
+// const createServer = express.createServer();
+const {Router, request} = require("express");
 // const {get} = require("mongoose");
 const router = Router();
 
+const bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+
 router.post('/edit/:uid');
+router.post('');
 
 const PORT = process.env.PORT || 8080;
 
-app.use(cors());
-// app.use(function(req, res, next) {
-//     res.header("Access-Control-Allow-Origin", "*");
-//     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-//     res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-//     next();
-// });
 
+app.use(cors());
 app.listen(PORT, () => {
     console.log('--------->' + PORT);
 })
 
 const apiString = '/api/';
 const get_all = apiString + 'get-all',
-    get_one = apiString + 'get-one';
-    update_one = apiString + 'edit/:uid'
+    get_one = apiString + 'get-one',
+    update_one = apiString + 'edit/:uid',
+    create_one = apiString + 'create'
 
 const apiList = {
     get_all,
     get_one,
     update_one,
+    create_one,
 }
 
 app.get('/', (req, res) => {
@@ -242,7 +243,7 @@ app.get(get_all, (req, res) => {
 })
 app.get(get_one, (req, res) => {
     CourseRepository.getAll().then(data => {
-        res.send({ get_one: get_one + ':uid'});
+        res.send({get_one: get_one + ':uid'});
     })
 })
 
@@ -254,10 +255,20 @@ app.get(get_one + '/:uid', (req, res) => {
 })
 
 app.post(update_one, (req, res) => {
-    console.log(req, res)
-    const name = 'test 11';
-    const title = 'test 1';
-    const price = 10;
+    if (!req.body) return res.sendStatus(400);
+    res.send(req.body);
+    const name = req.body.name;
+    const title = req.body.title;
+    const price = req.body.price;
     CourseRepository.postOneById(req.params.uid, name, title, price).then();
+    return res.status(200);
+})
+
+app.post(create_one, (req, res, body) => {
+    if (!req.body) return res.sendStatus(400);
+    res.send(req.body);
+    console.log(req.body.name)
+    CourseRepository.createOne(req.body.name, req.body.title, req.body.price).then();
+    return res.status(200);
 })
 

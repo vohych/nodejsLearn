@@ -20,10 +20,10 @@ class CourseRepository {
         }
     }
 
-    static async createOne(objStr){
-        const obj = JSON.parse(objStr);
+    static async createOne(name, title, price){
+        console.log(name, title, price)
         await this.connect();
-        await Course.create(obj);
+        await Course.create({name, title, price});
     }
 
     static async getAll() {
@@ -39,6 +39,10 @@ class CourseRepository {
     static async postOneById(id, name, title, price) {
         await this.connect();
         await Course.findOne({_id: id}).updateOne({name, title, price});
+    }
+
+    static strongSearch(){
+
     }
 }
 

@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 // import {HttpClient} from "@angular/common/http";
-import {HttpClient, HttpHeaders, HttpParams} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {ActivatedRoute, ActivatedRouteSnapshot, Router} from "@angular/router";
 import {Observable} from "rxjs";
 
@@ -8,13 +8,6 @@ export interface CourseInterface {
   title: string;
   name: string;
   price: number;
-}
-
-class RequestOptions {
-  constructor(param: { headers: Headers }) {
-
-  }
-
 }
 
 @Injectable({
@@ -39,18 +32,21 @@ export class EditFormService {
     return this.http.get<CourseInterface>(`http://localhost:8080/api/get-one/${this.uuid}`);
   }
 
-  public sendData(data: CourseInterface ) {
+  public sendData(data: CourseInterface) {
 
-    let headers = new Headers({'Content-Type': 'application/x-www-form-urlencoded'});
-    let options = new RequestOptions({headers: headers});
-    const body = new HttpParams({
-      fromString: `uuid=${this.uuid}&name=${data.name}&title=${data.title}&price=${data.price}`
-    });
-    return this.http.post<any>(`http://localhost:8080/api/edit/${this.uuid}`,
+    const headers = {'content-type': 'application/json'};
+    const body = {
+      name: data.name,
+      title: data.title,
+      price: data.price,
+    }
+    console.log(body)
+    return this.http.post<CourseInterface>(`http://localhost:8080/api/edit/${this.uuid}`,
       body,
-      options
+      {
+        headers: headers
+      }
     )
-
   }
 
 }

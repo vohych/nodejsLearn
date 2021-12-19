@@ -10,6 +10,7 @@ import { CreateComponent } from './create/create.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {EditCourseComponent} from "./edit-course/edit-course.component";
 import {CommonModule} from "@angular/common";
+import { CreateCourseComponent } from './create-course/create-course.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import {CommonModule} from "@angular/common";
     HomeComponent,
     CreateComponent,
     EditCourseComponent,
+    CreateCourseComponent,
   ],
   imports: [
     BrowserModule,
