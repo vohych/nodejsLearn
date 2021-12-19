@@ -1,0 +1,7 @@
+<!--<form method="post" name="updateForm" action="{{formAction}}">-->
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="text" [formControl]="form.name" name="formName">
+  <input type="text" [formControl]="form.title" name="formTitle">
+  <input type="number" [formControl]="form.price" name="formPrice">
+  <button type="submit">Create</button>
+</form>
