@@ -1,31 +1,32 @@
-import {Component, OnInit} from '@angular/core';
-import {CreateCourseService} from "./create-course.service";
-import {EditForm} from "./edit-form";
-import {HttpErrorResponse} from "@angular/common/http";
+import {Component} from '@angular/core';
+// import {FormCreateCourseService} from "./form-create-course.service";
+import {FormCreateCourse} from "./form-create-course";
+import {CourseService} from "../common/service/course.service";
+import {Router} from "@angular/router";
+
+// import {HttpErrorResponse} from "@angular/common/http";
 
 @Component({
   selector: 'app-create-course',
   templateUrl: './create-course.component.html',
   styleUrls: ['./create-course.component.scss']
 })
-export class CreateCourseComponent implements OnInit {
+export class CreateCourseComponent {
 
   constructor(
-    private service: CreateCourseService
+    private service: CourseService,
+    private router: Router
   ) {
-    this.form = new EditForm({title: '', name: '', price: 0});
+    this.form = new FormCreateCourse({title: '', name: '', price: 0});
   }
 
-  form: EditForm;
-
-  public ngOnInit(): void {
-    // this.service
-  }
+  form: FormCreateCourse;
 
   public onSubmit() {
-    this.service.createCourse(this.form.value).subscribe(data => {
-        console.log(data)
-      })
+    this.service.createCourse(this.form.value).subscribe((data: any) => {
+      console.log(data)
+      this.router.navigate(['/']).then();
+    })
   }
 
 }

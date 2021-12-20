@@ -21,7 +21,7 @@ class CourseRepository {
     }
 
     static async createOne(name, title, price){
-        console.log(name, title, price)
+        // console.log(name, title, price)
         await this.connect();
         await Course.create({name, title, price});
     }
@@ -46,7 +46,10 @@ class CourseRepository {
         await Course.findOne({_id: id}).deleteOne();
     }
 
-    static strongSearch(){
+    static async strongSearch(data){
+        await this.connect();
+        const search = await Course.find({name: data})
+        console.log(search, data)
 
     }
 }

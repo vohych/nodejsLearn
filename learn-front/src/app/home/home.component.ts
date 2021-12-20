@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {isEmpty} from "rxjs";
+import {CourseService} from "../common/service/course.service";
 
 @Component({
   selector: 'app-home',
@@ -14,6 +14,7 @@ export class HomeComponent implements OnInit {
   constructor(
     private http: HttpClient,
     private router: Router,
+    private service: CourseService
   ) {
   }
 
@@ -22,7 +23,7 @@ export class HomeComponent implements OnInit {
 
   public ngOnInit() {
 
-    this.http.get<any>('http://localhost:8080/api/get-all').subscribe(data => {
+    this.service.getAllCourse().subscribe(data => {
       this.viewAllCourse(data);
     })
 

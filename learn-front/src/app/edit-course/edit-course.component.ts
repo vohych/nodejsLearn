@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {EditForm} from "./edit-form";
-import {EditFormService} from "./edit-form.service";
+import {CourseService} from "../common/service/course.service";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-edit-course',
@@ -11,26 +12,30 @@ import {EditFormService} from "./edit-form.service";
 export class EditCourseComponent implements OnInit {
 
   form: EditForm;
-  uuid: any;
+  uuid: string | undefined;
 
   constructor(
-    private service: EditFormService,
+    private service: CourseService,
+    private router: Router,
   ) {
     this.form = new EditForm({title: '', name: '', price: 0})
   }
 
   public ngOnInit(): void {
-    this.service.getData().subscribe(data => {
+    this.uuid = this.router.routerState.snapshot.url.split('/')[2];
+    this.service.getData(this.uuid).subscribe(data => {
       this.form = new EditForm(data)
     })
+    console.log(this)
   }
 
   public onSubmit() {
-    this.service.sendData(this.form.value).subscribe();
+    this.service.sendData(this.form.value, this.uuid).subscribe();
   }
 
   public deleteCourse() {
-    this.service.delete().subscribe();
+    this.service.delete(this.uuid).subscribe();
+    this.router.navigate(['/']).then();
   }
 }
 
