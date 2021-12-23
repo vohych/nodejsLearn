@@ -1,6 +1,18 @@
 <form [formGroup]="form">
-  <input type="text" (keyup)="searchEventChange(this)" [formControl]="form.strongSearch">
+  <input type="text" (keyup)="searchEventChange()" [formControl]="form.search">
+  <div>
+    <span>Search type: </span>
+    <label>
+      <input type="checkbox" (change)="typeSearch()" [formControl]="form.checkbox">
+      : {{searchType}}
+    </label>
+  </div>
 </form>
-<div [innerHTML]="result">
-
+<p *ngIf="!results.length">Empty</p>
+<div *ngFor="let result of results">
+  <p>
+    <span><strong>Name: </strong>{{result.name}}</span>
+    <span><strong> Title: </strong>{{result.title}}</span>
+    <span><strong> Price: </strong>{{result.price}}</span>
+  </p>
 </div>

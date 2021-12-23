@@ -20,7 +20,7 @@ class CourseRepository {
         }
     }
 
-    static async createOne(name, title, price){
+    static async createOne(name, title, price) {
         // console.log(name, title, price)
         await this.connect();
         await Course.create({name, title, price});
@@ -46,13 +46,30 @@ class CourseRepository {
         await Course.findOne({_id: id}).deleteOne();
     }
 
-    static async strongSearch(data){
+    static async strongSearch(data) {
         await this.connect();
-        const search = await Course.find({name: data})
-        console.log(search, data)
+        const search = await Course.find({$or: [{name: data}, {title: data}]}).clone()
+        return search;
+    }
 
+    static async flexSearch(data) {
+        const searchRegx = new RegExp(data)
+        await this.connect();
+        const search = await Course.find({$or: [{name: {$regex: searchRegx}}, {title: {$regex: searchRegx}}]}).clone()
+        return search;
+    }
+
+    static async aggregation(data) {
+        await this.connect();
+        const aggregation = await Course
+            .aggregate(
+                [
+                   ]
+            )
+        ;
+        console.log(aggregation)
+        return aggregation;
     }
 }
 
 module.exports = CourseRepository;
-

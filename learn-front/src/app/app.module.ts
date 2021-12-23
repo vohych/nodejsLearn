@@ -11,6 +11,7 @@ import {EditCourseComponent} from "./edit-course/edit-course.component";
 import {CommonModule} from "@angular/common";
 import { CreateCourseComponent } from './create-course/create-course.component';
 import { StrongSearchComponent } from './strong-search/strong-search.component';
+import { AggregationComponent } from './aggregation/aggregation.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { StrongSearchComponent } from './strong-search/strong-search.component';
     EditCourseComponent,
     CreateCourseComponent,
     StrongSearchComponent,
+    AggregationComponent,
   ],
   imports: [
     BrowserModule,

@@ -76,16 +76,40 @@ export class CourseService {
     return this.http.delete(`http://localhost:8080/api/delete/${uuid}`)
   }
 
-  public strongSearch(data: any) {
+  public search(data: any, searchType: string) {
 
     const headers = {'Content-Type' : 'text/plain'};
-    const params = new HttpParams().set("strongSearch", JSON.stringify(data.strongSearch))
+    console.log(data, searchType)
+    const params = new HttpParams({
+      fromObject: {
+        type: searchType,
+        value: data.search,
+      }
+    });
 
     return this.http.get('http://localhost:8080/api/strong-search',
       {
         headers,
         params
       }
+    )
+  }
+
+  public aggregation(number: any){
+    // const headers = {'Content-Type' : 'text/plain'};
+    // const params = new HttpParams({
+    //   fromObject: {
+    //     value: number,
+    //   }
+    // });
+
+    console.log(number)
+
+    return this.http.get('http://localhost:8080/api/aggregation',
+      // {
+      //   headers,
+      //   params
+      // }
     )
   }
 }

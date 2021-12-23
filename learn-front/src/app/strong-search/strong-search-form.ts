@@ -1,15 +1,18 @@
 import {FormControl, FormGroup} from "@angular/forms";
 
 export class StrongSearchForm extends FormGroup {
-
-  constructor(data: { strongSearch: string }) {
+  constructor(data: { search: string; checkbox: string }) {
     super({
-      strongSearch: new FormControl(data.strongSearch),
+      search: new FormControl(data.search),
+      checkbox: new FormControl(data.checkbox),
     });
   }
 
-  get strongSearch(): FormControl {
-    return this.get('strongSearch') as FormControl
+  get search(): FormControl {
+    return this.get('search') as FormControl
   }
 
+  get checkbox(): FormControl {
+    return this.get('checkbox') as FormControl
+  }
 }

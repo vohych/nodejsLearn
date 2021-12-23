@@ -1,5 +1,3 @@
-
-
 const CourseRepository = require('./custom_modules/CourseRepository');
 const express = require('express');
 const cors = require('cors');
@@ -29,6 +27,7 @@ const get_all = apiString + 'get-all',
     update_one = apiString + 'edit/:uid',
     delete_one = apiString + 'delete/:uid',
     create_one = apiString + 'create',
+    aggregation = apiString + 'aggregation',
     strong_search = apiString + 'strong-search';
 
 const apiList = {
@@ -37,7 +36,8 @@ const apiList = {
     update_one,
     create_one,
     delete_one,
-    strong_search,
+    strong_search: strong_search + '?type=strict|flex&value=text',
+    aggregation,
 }
 
 app.get('/', (req, res) => {
@@ -79,16 +79,31 @@ app.post(create_one, (req, res) => {
     return res.status(200);
 })
 
-app.delete(delete_one, (req, res)=>{
+app.delete(delete_one, (req, res) => {
     if (!req.body) return res.sendStatus(400);
     res.send(req.body);
     CourseRepository.deleteOneById(req.params.uid).then();
     return res.status(200);
 })
 
-app.get(strong_search, (req, res)=>{
-    if(!req.query.strongSearch) return res.sendStatus(400);
-    res.send(res.query);
-    CourseRepository.strongSearch(req.query.strongSearch)
-    return res.status(200)
+app.get(strong_search, async (req, res) => {
+    if (!req.query.type) {
+        return res.sendStatus(400);
+        // res.send(res.query.type);
+    } else {
+        console.log(req.query)
+        if (req.query.type === 'Strict') {
+            const result = CourseRepository.strongSearch(req.query.value).then();
+            return res.status(200).json(await result);
+        } else {
+            const result = CourseRepository.flexSearch(req.query.value).then();
+            return res.status(200).json(await result);
+        }
+
+    }
+})
+
+app.get(aggregation, async (req, res) => {
+    const result = CourseRepository.aggregation();
+    return res.status(200).json(await result);
 })
