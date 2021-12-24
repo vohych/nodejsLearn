@@ -64,7 +64,22 @@ class CourseRepository {
         const aggregation = await Course
             .aggregate(
                 [
-                   ]
+                    {
+                        $group: {
+                            _id: "$price",
+                            count: {$count: {}},
+                            courses: {$push: {_id: '$_id', name: '$name'}}
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            price: "$_id",
+                            count: 1,
+                            courses: 1
+                        }
+                    }
+                ]
             )
         ;
         console.log(aggregation)

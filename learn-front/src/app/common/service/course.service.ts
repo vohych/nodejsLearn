@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
-import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 
 export interface CourseInterface {
@@ -95,21 +94,4 @@ export class CourseService {
     )
   }
 
-  public aggregation(number: any){
-    // const headers = {'Content-Type' : 'text/plain'};
-    // const params = new HttpParams({
-    //   fromObject: {
-    //     value: number,
-    //   }
-    // });
-
-    console.log(number)
-
-    return this.http.get('http://localhost:8080/api/aggregation',
-      // {
-      //   headers,
-      //   params
-      // }
-    )
-  }
 }

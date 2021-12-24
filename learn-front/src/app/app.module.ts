@@ -12,6 +12,8 @@ import {CommonModule} from "@angular/common";
 import { CreateCourseComponent } from './create-course/create-course.component';
 import { StrongSearchComponent } from './strong-search/strong-search.component';
 import { AggregationComponent } from './aggregation/aggregation.component';
+import { ListCoursesComponent } from './aggregation/list-courses/list-courses.component';
+import { PriceInfoComponent } from './aggregation/price-info/price-info.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { AggregationComponent } from './aggregation/aggregation.component';
     CreateCourseComponent,
     StrongSearchComponent,
     AggregationComponent,
+    ListCoursesComponent,
+    PriceInfoComponent,
   ],
   imports: [
     BrowserModule,

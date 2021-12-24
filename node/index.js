@@ -104,6 +104,9 @@ app.get(strong_search, async (req, res) => {
 })
 
 app.get(aggregation, async (req, res) => {
+    if (!req){
+        return res.send(res.sendStatus(400))
+    }
     const result = CourseRepository.aggregation();
     return res.status(200).json(await result);
 })
