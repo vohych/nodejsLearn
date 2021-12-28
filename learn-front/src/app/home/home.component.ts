@@ -1,7 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
-import {CourseService} from "../common/service/course.service";
+import {ViewCourseService} from '../common/service/view-course.service';
+import {ViewCourseInterface} from "../common/interface/view-course.interface";
+import {HomeInterface} from "./home.interface";
 
 @Component({
   selector: 'app-home',
@@ -11,25 +13,24 @@ import {CourseService} from "../common/service/course.service";
 
 export class HomeComponent implements OnInit {
 
+  courses: Array<ViewCourseInterface> = [];
+  // courses: any = [];
+
   constructor(
     private http: HttpClient,
     private router: Router,
-    private service: CourseService
+    private service: ViewCourseService
   ) {
   }
 
-  courses: any | undefined;
-  course: any | {};
-
   public ngOnInit() {
-
     this.service.getAllCourse().subscribe(data => {
       this.viewAllCourse(data);
     })
-
   }
 
-  viewAllCourse(data: Object) {
+  viewAllCourse(data: Array<ViewCourseInterface>) {
     Object.keys(data).length ? this.courses = data : this.router.navigateByUrl('/create-course');
   }
 }
+

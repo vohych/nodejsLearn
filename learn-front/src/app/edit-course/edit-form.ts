@@ -1,9 +1,9 @@
 import {FormControl, FormGroup} from "@angular/forms";
-import {CourseInterface} from "../common/service/course.service";
+import {EditCourseInterface} from "./edit-course.interface";
 
 export class EditForm extends FormGroup {
 
-  constructor(data: CourseInterface) {
+  constructor(data: EditCourseInterface) {
     super({
       title: new FormControl(data.title),
       name: new FormControl(data.name),

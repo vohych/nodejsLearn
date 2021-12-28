@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {CourseService} from "../common/service/course.service";
+import {ViewCourseService} from "../common/service/view-course.service";
 
 @Component({
   selector: 'app-course',
@@ -15,23 +15,23 @@ export class CourseComponent implements OnInit {
     private activeRoute: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private service: CourseService,
+    private service: ViewCourseService,
   ) {
   }
 
   uuid: string | undefined;
-  name: CourseService | undefined;
-  title: CourseService | undefined;
-  price: CourseService | undefined;
+  name: ViewCourseService | undefined;
+  title: ViewCourseService | undefined;
+  price: ViewCourseService | undefined;
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.uuid = this.activeRoute.snapshot.url[1].path;
     this.service.getData(this.uuid).subscribe(data=>{
       this.viewOneCourse(data);
     })
   }
 
-  viewOneCourse(data: any): void {
+  public viewOneCourse(data: any): void {
     this.name = data.name;
     this.title = data.title;
     this.price = data.price;

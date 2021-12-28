@@ -1,10 +1,7 @@
 import {Component} from '@angular/core';
-// import {FormCreateCourseService} from "./form-create-course.service";
 import {FormCreateCourse} from "./form-create-course";
-import {CourseService} from "../common/service/course.service";
 import {Router} from "@angular/router";
-
-// import {HttpErrorResponse} from "@angular/common/http";
+import {CreateCourseService} from "./create-course.service";
 
 @Component({
   selector: 'app-create-course',
@@ -14,7 +11,7 @@ import {Router} from "@angular/router";
 export class CreateCourseComponent {
 
   constructor(
-    private service: CourseService,
+    private service: CreateCourseService,
     private router: Router
   ) {
     this.form = new FormCreateCourse({title: '', name: '', price: 0});
@@ -23,8 +20,7 @@ export class CreateCourseComponent {
   form: FormCreateCourse;
 
   public onSubmit() {
-    this.service.createCourse(this.form.value).subscribe((data: any) => {
-      console.log(data)
+    this.service.createCourse(this.form.value).subscribe(() => {
       this.router.navigate(['/']).then();
     })
   }
