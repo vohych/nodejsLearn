@@ -1,0 +1,9 @@
+<div>
+  <p>
+    <span>{{data.index + 1}}) </span>
+    <span>Price: {{data.price}}</span>
+    <span> Count: {{data.count}}</span>
+    <input type="checkbox" (click)="viewCourses()">
+  </p>
+    <app-list-courses [data]="data.courses" *ngIf="viewCourseStatus">s</app-list-courses>
+</div>
