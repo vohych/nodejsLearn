@@ -15,7 +15,7 @@ export class EditCourseService {
   ) {
   }
 
-  delete(uuid: UUIDInterface) {
+  public delete(uuid: UUIDInterface) {
     return this.http.delete(`http://localhost:8080/api/delete/${uuid}`)
   }
 

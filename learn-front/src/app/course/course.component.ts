@@ -11,6 +11,11 @@ import {ViewCourseService} from "../common/service/view-course.service";
 
 export class CourseComponent implements OnInit {
 
+  public uuid: string = '';
+  public name: ViewCourseService | undefined;
+  public title: ViewCourseService | undefined;
+  public price: ViewCourseService | undefined;
+
   constructor(
     private activeRoute: ActivatedRoute,
     private http: HttpClient,
@@ -19,10 +24,6 @@ export class CourseComponent implements OnInit {
   ) {
   }
 
-  uuid: string | undefined;
-  name: ViewCourseService | undefined;
-  title: ViewCourseService | undefined;
-  price: ViewCourseService | undefined;
 
   public ngOnInit(): void {
     this.uuid = this.activeRoute.snapshot.url[1].path;

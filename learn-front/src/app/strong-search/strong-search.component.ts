@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {CourseService} from "../common/service/course.service";
 import {StrongSearchForm} from "./strong-search-form";
-import {THIS_EXPR} from "@angular/compiler/src/output/output_ast";
+import {SearchInterface} from "./search.interface";
+
+enum SearchTypeEnum {
+  STRICT='strict',
+  FLEX= 'flex'
+}
 
 @Component({
   selector: 'app-strong-search',
@@ -11,8 +16,9 @@ import {THIS_EXPR} from "@angular/compiler/src/output/output_ast";
 
 export class StrongSearchComponent implements OnInit {
 
-  results: any = [];
-  searchType: string = 'flex';
+  public results: Array<SearchInterface> = [];
+  public searchType: SearchTypeEnum = SearchTypeEnum.FLEX;
+  public form: StrongSearchForm;
 
   constructor(
     private service: CourseService,
@@ -20,25 +26,21 @@ export class StrongSearchComponent implements OnInit {
     this.form = new StrongSearchForm({search: '', checkbox: ''});
   }
 
-  form: StrongSearchForm;
-
   public ngOnInit(): void {
-    this.results = []
     this.searchEventChange();
-  }
+}
 
   public searchEventChange() {
     this.service.search(this.form.value, this.searchType).subscribe(data => {
       this.results = data;
-      // console.log(this.form)
     })
   }
 
   public typeSearch() {
     if (this.form.value.checkbox) {
-      this.searchType = 'Strict';
+      this.searchType = SearchTypeEnum.STRICT;
     } else {
-      this.searchType = 'Flex';
+      this.searchType = SearchTypeEnum.FLEX;
     }
     this.searchEventChange();
   }

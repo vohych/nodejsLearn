@@ -12,8 +12,8 @@ import {Router} from "@angular/router";
 
 export class EditCourseComponent implements OnInit {
 
-  form: EditForm;
-  uuid: string | undefined;
+  public form: EditForm;
+  private uuid: string | undefined;
 
   constructor(
     private service: CourseService,
@@ -28,7 +28,6 @@ export class EditCourseComponent implements OnInit {
     this.viewService.getData(this.uuid).subscribe(data => {
       this.form = new EditForm(data)
     })
-    console.log(this)
   }
 
   public onSubmit() {

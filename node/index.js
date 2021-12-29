@@ -89,22 +89,20 @@ app.delete(delete_one, (req, res) => {
 app.get(strong_search, async (req, res) => {
     if (!req.query.type) {
         return res.sendStatus(400);
-        // res.send(res.query.type);
     } else {
         console.log(req.query)
-        if (req.query.type === 'Strict') {
+        if (req.query.type === 'strict') {
             const result = CourseRepository.strongSearch(req.query.value).then();
             return res.status(200).json(await result);
         } else {
             const result = CourseRepository.flexSearch(req.query.value).then();
             return res.status(200).json(await result);
         }
-
     }
 })
 
 app.get(aggregation, async (req, res) => {
-    if (!req){
+    if (!req) {
         return res.send(res.sendStatus(400))
     }
     const result = CourseRepository.aggregation();

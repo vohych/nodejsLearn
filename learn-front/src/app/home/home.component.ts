@@ -3,7 +3,6 @@ import {HttpClient} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {ViewCourseService} from '../common/service/view-course.service';
 import {ViewCourseInterface} from "../common/interface/view-course.interface";
-import {HomeInterface} from "./home.interface";
 
 @Component({
   selector: 'app-home',
@@ -13,8 +12,7 @@ import {HomeInterface} from "./home.interface";
 
 export class HomeComponent implements OnInit {
 
-  courses: Array<ViewCourseInterface> = [];
-  // courses: any = [];
+  public courses: Array<ViewCourseInterface> = [];
 
   constructor(
     private http: HttpClient,

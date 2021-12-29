@@ -1,6 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {SearchInterface} from "../../strong-search/search.interface";
 
 export interface CourseInterface {
   title: string;
@@ -47,7 +48,7 @@ export class  CourseService {
     return this.http.delete(`http://localhost:8080/api/delete/${uuid}`)
   }
 
-  public search(data: any, searchType: string) {
+  public search(data: any, searchType: string): Observable<Array<SearchInterface>> {
 
     const headers = {'Content-Type' : 'text/plain'};
     console.log(data, searchType)
@@ -58,7 +59,7 @@ export class  CourseService {
       }
     });
 
-    return this.http.get('http://localhost:8080/api/strong-search',
+    return this.http.get<Array<SearchInterface>>('http://localhost:8080/api/strong-search',
       {
         headers,
         params

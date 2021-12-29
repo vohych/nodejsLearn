@@ -10,6 +10,8 @@ import {CreateCourseService} from "./create-course.service";
 })
 export class CreateCourseComponent {
 
+  public form: FormCreateCourse;
+
   constructor(
     private service: CreateCourseService,
     private router: Router
@@ -17,7 +19,6 @@ export class CreateCourseComponent {
     this.form = new FormCreateCourse({title: '', name: '', price: 0});
   }
 
-  form: FormCreateCourse;
 
   public onSubmit() {
     this.service.createCourse(this.form.value).subscribe(() => {
