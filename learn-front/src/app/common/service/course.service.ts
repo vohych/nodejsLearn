@@ -1,18 +1,20 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpParams} from "@angular/common/http";
 import {Observable} from "rxjs";
+import {SearchInterface} from "../../strong-search/search.interface";
 
 export interface CourseInterface {
   title: string;
   name: string;
   price: number;
+  id: number;
 }
 
 @Injectable({
   providedIn: 'root'
 })
 
-export class CourseService {
+export class  CourseService {
 
   uuid: string | undefined;
   name: CourseInterface | undefined;
@@ -24,17 +26,6 @@ export class CourseService {
   ) {
   }
 
-  public ngOnInit() {
-
-  }
-
-  public getAllCourse(): Observable<CourseInterface> {
-    return this.http.get<CourseInterface>('http://localhost:8080/api/get-all')
-  }
-
-  public getData(uuid: string): Observable<CourseInterface> {
-    return this.http.get<CourseInterface>(`http://localhost:8080/api/get-one/${uuid}`);
-  }
 
 
   public sendData(data: CourseInterface, uuid: string | undefined) {
@@ -53,29 +44,11 @@ export class CourseService {
 
   }
 
-  public createCourse(data: CourseInterface) {
-
-    let options = {
-      headers: {'Content-Type': 'application/json'}
-    };
-
-    const body = {
-      name: data.name,
-      title: data.title,
-      price: data.price,
-    }
-
-    return this.http.post<any>(`http://localhost:8080/api/create`,
-      body,
-      options
-    )
-  }
-
   delete(uuid: string | undefined) {
     return this.http.delete(`http://localhost:8080/api/delete/${uuid}`)
   }
 
-  public search(data: any, searchType: string) {
+  public search(data: any, searchType: string): Observable<Array<SearchInterface>> {
 
     const headers = {'Content-Type' : 'text/plain'};
     console.log(data, searchType)
@@ -86,7 +59,7 @@ export class CourseService {
       }
     });
 
-    return this.http.get('http://localhost:8080/api/strong-search',
+    return this.http.get<Array<SearchInterface>>('http://localhost:8080/api/strong-search',
       {
         headers,
         params

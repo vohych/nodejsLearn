@@ -28,7 +28,8 @@ const get_all = apiString + 'get-all',
     delete_one = apiString + 'delete/:uid',
     create_one = apiString + 'create',
     aggregation = apiString + 'aggregation',
-    strong_search = apiString + 'strong-search';
+    strong_search = apiString + 'strong-search',
+    buyCourse = apiString + ':uid/buy';
 
 const apiList = {
     get_all,
@@ -38,6 +39,7 @@ const apiList = {
     delete_one,
     strong_search: strong_search + '?type=strict|flex&value=text',
     aggregation,
+    buyCourse,
 }
 
 app.get('/', (req, res) => {
@@ -89,24 +91,37 @@ app.delete(delete_one, (req, res) => {
 app.get(strong_search, async (req, res) => {
     if (!req.query.type) {
         return res.sendStatus(400);
-        // res.send(res.query.type);
     } else {
         console.log(req.query)
-        if (req.query.type === 'Strict') {
+        if (req.query.type === 'strict') {
             const result = CourseRepository.strongSearch(req.query.value).then();
             return res.status(200).json(await result);
         } else {
             const result = CourseRepository.flexSearch(req.query.value).then();
             return res.status(200).json(await result);
         }
-
     }
 })
 
 app.get(aggregation, async (req, res) => {
-    if (!req){
+    if (!req) {
         return res.send(res.sendStatus(400))
     }
     const result = CourseRepository.aggregation();
     return res.status(200).json(await result);
+})
+
+
+app.post(buyCourse, async (req, res) => {
+    if (!req) {
+        return res.send(res.sendStatus(400))
+    }
+    const data = {
+        _id: req.params.uid,
+        name: req.body.name,
+        email: req.body.email,
+    }
+    const result = CourseRepository.buyCourse(data);
+//    console.log(result)
+    return res.status(200).json({result});
 })

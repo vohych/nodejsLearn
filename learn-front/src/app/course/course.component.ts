@@ -1,7 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
-import {CourseService} from "../common/service/course.service";
+import {ViewCourseService} from "../common/service/view-course.service";
+
+enum EnumBuy {
+  BUY = 'BUY',
+  CLOSE = 'CLOSE'
+}
 
 @Component({
   selector: 'app-course',
@@ -11,30 +16,38 @@ import {CourseService} from "../common/service/course.service";
 
 export class CourseComponent implements OnInit {
 
+  public uuid: string = '';
+  public name: ViewCourseService | undefined;
+  public title: ViewCourseService | undefined;
+  public price: ViewCourseService | undefined;
+  public buyState: boolean = false;
+  public buyText: string = EnumBuy.BUY;
+
   constructor(
     private activeRoute: ActivatedRoute,
     private http: HttpClient,
     private router: Router,
-    private service: CourseService,
+    private service: ViewCourseService,
   ) {
   }
 
-  uuid: string | undefined;
-  name: CourseService | undefined;
-  title: CourseService | undefined;
-  price: CourseService | undefined;
 
-  ngOnInit(): void {
+  public ngOnInit(): void {
     this.uuid = this.activeRoute.snapshot.url[1].path;
-    this.service.getData(this.uuid).subscribe(data=>{
+    this.service.getData(this.uuid).subscribe(data => {
       this.viewOneCourse(data);
     })
   }
 
-  viewOneCourse(data: any): void {
+  public viewOneCourse(data: any): void {
     this.name = data.name;
     this.title = data.title;
     this.price = data.price;
+  }
+
+  public buyForm() {
+    this.buyState = !this.buyState;
+    this.buyState ? this.buyText = EnumBuy.CLOSE : this.buyText = EnumBuy.BUY;
   }
 
 }

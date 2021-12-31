@@ -6,3 +6,9 @@
       <a routerLink="/edit/{{this.uuid}}">Edit</a>
     </p>
 </div>
+
+<span style="cursor: pointer; user-select: none" (click)="buyForm()">
+  {{buyText}}
+</span>
+
+<app-buy-course *ngIf="buyState"></app-buy-course>
