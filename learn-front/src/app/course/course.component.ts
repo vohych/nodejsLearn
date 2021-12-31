@@ -3,6 +3,11 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {HttpClient} from "@angular/common/http";
 import {ViewCourseService} from "../common/service/view-course.service";
 
+enum EnumBuy {
+  BUY = 'BUY',
+  CLOSE = 'CLOSE'
+}
+
 @Component({
   selector: 'app-course',
   templateUrl: './course.component.html',
@@ -15,6 +20,8 @@ export class CourseComponent implements OnInit {
   public name: ViewCourseService | undefined;
   public title: ViewCourseService | undefined;
   public price: ViewCourseService | undefined;
+  public buyState: boolean = false;
+  public buyText: string = EnumBuy.BUY;
 
   constructor(
     private activeRoute: ActivatedRoute,
@@ -27,7 +34,7 @@ export class CourseComponent implements OnInit {
 
   public ngOnInit(): void {
     this.uuid = this.activeRoute.snapshot.url[1].path;
-    this.service.getData(this.uuid).subscribe(data=>{
+    this.service.getData(this.uuid).subscribe(data => {
       this.viewOneCourse(data);
     })
   }
@@ -36,6 +43,11 @@ export class CourseComponent implements OnInit {
     this.name = data.name;
     this.title = data.title;
     this.price = data.price;
+  }
+
+  public buyForm() {
+    this.buyState = !this.buyState;
+    this.buyState ? this.buyText = EnumBuy.CLOSE : this.buyText = EnumBuy.BUY;
   }
 
 }

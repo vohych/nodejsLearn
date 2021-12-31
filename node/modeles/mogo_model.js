@@ -7,4 +7,10 @@ const course = new Schema({
     price: Number,
 })
 
+const client = new Schema({
+    name: String,
+    email: String,
+})
+
 module.exports = model('Course', course, 'courses');
+module.exports = model('Client', client, 'client');

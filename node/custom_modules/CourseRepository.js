@@ -1,4 +1,5 @@
-const Course = require('../modeles/mogo_model')
+const Course = require('../modeles/mogo_model');
+const Client = require('../modeles/mogo_model');
 const mongoose = require("mongoose");
 
 class CourseRepository {
@@ -84,6 +85,20 @@ class CourseRepository {
         ;
         console.log(aggregation)
         return aggregation;
+    }
+
+    static async buyCourse(data) {
+        await this.connect();
+        const findCourse = await Course.findById(data._id, (err, user)=>{
+            console.log(user, err)
+        }).clone();
+        const findClient = await Client.find({email: data.email})
+        if (Object.keys(findClient).length) {
+//            searchClient.
+        } else {
+            await Client.create({name: data.name, email: data.email})
+        }
+        console.log(findCourse, data._id)
     }
 }
 

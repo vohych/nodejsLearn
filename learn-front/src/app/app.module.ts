@@ -15,6 +15,7 @@ import {AggregationComponent} from './aggregation/aggregation.component';
 import {ListCoursesComponent} from './aggregation/list-courses/list-courses.component';
 import {PriceInfoComponent} from './aggregation/price-info/price-info.component';
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
+import { BuyCourseComponent } from './course/buy-course/buy-course.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
     ListCoursesComponent,
     PriceInfoComponent,
     PageNotFoundComponent,
+    BuyCourseComponent,
   ],
   imports: [
     BrowserModule,
