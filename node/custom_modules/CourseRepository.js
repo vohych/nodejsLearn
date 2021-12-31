@@ -13,7 +13,6 @@ class CourseRepository {
 
         try {
             await mongoose.connect('mongodb://root:root_password@mongo_db:27017');
-
             this.connected = true;
         } catch (e) {
             console.error('MongoDB Connection Error:', e);
@@ -80,8 +79,7 @@ class CourseRepository {
                         }
                     }
                 ]
-            )
-        ;
+            );
         console.log(aggregation)
         return aggregation;
     }
