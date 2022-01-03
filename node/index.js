@@ -47,6 +47,7 @@ app.get('/', (req, res) => {
 })
 app.get(get_all, (req, res) => {
     CourseRepository.getAll().then(data => {
+        console.log(data)
         res.send(data);
     })
 })
@@ -111,7 +112,6 @@ app.get(aggregation, async (req, res) => {
     return res.status(200).json(await result);
 })
 
-
 app.post(buyCourse, async (req, res) => {
     if (!req) {
         return res.send(res.sendStatus(400))
@@ -121,7 +121,7 @@ app.post(buyCourse, async (req, res) => {
         name: req.body.name,
         email: req.body.email,
     }
-    const result = CourseRepository.buyCourse(data);
-//    console.log(result)
+//    console.log(data)
+    const result = await CourseRepository.buyCourse(data).then();
     return res.status(200).json({result});
 })

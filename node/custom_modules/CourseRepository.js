@@ -1,6 +1,6 @@
-const Course = require('../modeles/mogo_model');
-const Client = require('../modeles/mogo_model');
 const mongoose = require("mongoose");
+const Course = require('../modeles/course');
+const Client = require('../modeles/client');
 
 class CourseRepository {
     static connected = false;
@@ -21,7 +21,6 @@ class CourseRepository {
     }
 
     static async createOne(name, title, price) {
-        // console.log(name, title, price)
         await this.connect();
         await Course.create({name, title, price});
     }
@@ -81,23 +80,33 @@ class CourseRepository {
                     }
                 ]
             );
-        console.log(aggregation)
+//        console.log(aggregation)
         return aggregation;
     }
 
     static async buyCourse(data) {
+
         await this.connect();
-        const findCourse = await Course.findById(data._id, (err, user)=>{
-            console.log(user, err)
-        }).clone();
-        const findClient = await Client.find({email: data.email})
-        if (Object.keys(findClient).length) {
-//            searchClient.
+        const findCourse = await Course.findById(data._id).clone();
+        const findClient = await Client.findOne({email: data.email}).clone();
+        const isEmptyClient = await Client.find().clone();
+
+        if (findCourse && isEmptyClient) {
+            if (findClient) {
+                await Client.findById({_id: findClient._id}).updateOne({buysCourse: findCourse})
+
+                console.log(await Client.find())
+            } else {
+                await Client.create({name: data.name, email: data.email})
+                console.log('Client created')
+            }
+//            return findCourse;
         } else {
-            await Client.create({name: data.name, email: data.email})
+            return {error: 'Course not found'};
         }
-        console.log(findCourse, data._id)
+
     }
+
 }
 
 module.exports = CourseRepository;

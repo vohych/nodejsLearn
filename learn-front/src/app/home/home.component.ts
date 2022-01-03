@@ -24,6 +24,7 @@ export class HomeComponent implements OnInit {
   public ngOnInit() {
     this.service.getAllCourse().subscribe(data => {
       this.viewAllCourse(data);
+      console.log(data)
     })
   }
 
