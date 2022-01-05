@@ -1,11 +1,14 @@
 const CourseRepository = require('./custom_modules/CourseRepository');
+const Course = new CourseRepository();
 const express = require('express');
 const cors = require('cors');
 const app = express();
 const {Router} = require("express");
 const router = Router();
+const uuid = require('uuid');
 
 const bodyParser = require('body-parser');
+const mongoose = require("mongoose");
 // app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 
@@ -42,50 +45,54 @@ const apiList = {
     buyCourse,
 }
 
+mongoose.connect('mongodb://root:root_password@mongo_db:27017').then(() => {
+    console.log('Connection established');
+});
+
 app.get('/', (req, res) => {
     res.send(apiList)
 })
 app.get(get_all, (req, res) => {
-    CourseRepository.getAll().then(data => {
-        console.log(data)
+    Course.getAll().then(data => {
+//        console.log(data)
         res.send(data);
     })
 })
 app.get(get_one, (req, res) => {
-    CourseRepository.getAll().then(() => {
+    Course.getAll().then(() => {
         res.send({get_one: get_one + ':uid'});
     })
 })
 
 app.get(get_one + '/:uid', (req, res) => {
-    CourseRepository.getOneById(req.params.uid).then(data => {
-        console.log(data);
+    Course.getOneById(req.params.uid).then(data => {
+//        console.log(data);
         res.send(data);
     })
 })
 
 app.post(update_one, (req, res) => {
-    console.log(req.body)
+//    console.log(req.body)
     if (!req.body) return res.sendStatus(400);
     res.send(req.body);
     const name = req.body.name;
     const title = req.body.title;
     const price = req.body.price;
-    CourseRepository.updateOneById(req.params.uid, name, title, price).then();
+    Course.updateOneById(req.params.uid, name, title, price).then();
     return res.status(200);
 })
 
 app.post(create_one, (req, res) => {
     if (!req.body) return res.sendStatus(400);
     res.send(req.body);
-    CourseRepository.createOne(req.body.name, req.body.title, req.body.price).then();
+    Course.createOne(req.body.name, req.body.title, req.body.price).then();
     return res.status(200);
 })
 
 app.delete(delete_one, (req, res) => {
     if (!req.body) return res.sendStatus(400);
     res.send(req.body);
-    CourseRepository.deleteOneById(req.params.uid).then();
+    Course.deleteOneById(req.params.uid).then();
     return res.status(200);
 })
 
@@ -93,12 +100,12 @@ app.get(strong_search, async (req, res) => {
     if (!req.query.type) {
         return res.sendStatus(400);
     } else {
-        console.log(req.query)
+//        console.log(req.query)
         if (req.query.type === 'strict') {
-            const result = CourseRepository.strongSearch(req.query.value).then();
+            const result = Course.strongSearch(req.query.value).then();
             return res.status(200).json(await result);
         } else {
-            const result = CourseRepository.flexSearch(req.query.value).then();
+            const result = Course.flexSearch(req.query.value).then();
             return res.status(200).json(await result);
         }
     }
@@ -108,7 +115,7 @@ app.get(aggregation, async (req, res) => {
     if (!req) {
         return res.send(res.sendStatus(400))
     }
-    const result = CourseRepository.aggregation();
+    const result = Course.aggregation();
     return res.status(200).json(await result);
 })
 
@@ -116,12 +123,14 @@ app.post(buyCourse, async (req, res) => {
     if (!req) {
         return res.send(res.sendStatus(400))
     }
+
     const data = {
         _id: req.params.uid,
         name: req.body.name,
         email: req.body.email,
     }
-//    console.log(data)
-    const result = await CourseRepository.buyCourse(data).then();
+    const result = await Course.buyCourse(data).then();
+//    if (!result.status.code)
+        console.log(result);
     return res.status(200).json({result});
 })
