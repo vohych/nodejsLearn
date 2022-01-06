@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Course = require('../modeles/course');
 const Client = require('../modeles/client');
+const ClientsStatisticCache = require('../modeles/save_group_client');
 const {Schema, model} = require('mongoose');
 
 class CourseRepository {
@@ -12,7 +13,7 @@ class CourseRepository {
 
     async getAll() {
 
-        return Course.find();
+        return Course.find({});
     }
 
     async getOneById(id) {
@@ -78,29 +79,115 @@ class CourseRepository {
                     const courseExist = findClient.purchasedCurses.some((course) => {
                         return course._id.toString() === findCourse._id.toString()
                     });
-                    !courseExist && await Client.updateOne({
+                    !courseExist && await Client.updateOne(
+                        {
                             _id: id
                         },
-                        {$push: {purchasedCurses: findCourse}}
+                        {
+                            $push: {
+                                purchasedCurses: findCourse
+                            }
+                        }
                     ).exec()
-                    return {response: {client: 'exist', course: 'added'}, status: {code: 200}};
+                    return {response: {client: 'exist', course: 'added'}, status: {code: 201}};
                 } else {
+
                     await Client.create({name: data.name, email: data.email});
                     const findClient = await Client.findOne({email: data.email});
                     const id = findClient._id;
                     await Client.updateOne(
-                        {_id: id},
-                        {$push: {purchasedCurses: findCourse}}
+                        {
+                            _id: id
+                        },
+                        {
+                            $push: {
+                                purchasedCurses: findCourse
+                            }
+                        }
                     )
-                    return {response: {client: 'created', course: 'added'}, status: {code: 200}};
+                    return {
+                        response: {
+                            client: 'created',
+                            course: 'added'
+                        }, status: {
+                            code: 201
+                        }
+                    };
 
                 }
             } else {
-                return {response: {error: 'course not found', status: {code: 404}}};
+                return {
+                    response: {
+                        error: 'course not found',
+                        status: {
+                            code: 404
+                        }
+                    }
+                };
             }
         } catch (e) {
-            return {response: {error: e, type: 'catch'}}
+            return {
+                response: {
+                    error: e,
+                    type: 'catch'
+                }
+            }
+
         }
+    }
+
+    async getClients() {
+//        console.log(await Client.find().deleteMany())
+
+        const cached = await ClientsStatisticCache.find();
+
+        if (!!cached) {
+            return cached;
+        }
+
+        const data = await Client.aggregate(
+            [
+                {
+                    $unwind: {
+                        path: '$purchasedCurses',
+                    }
+                },
+
+                {
+                    $group: {
+                        _id: {_id: '$_id'},
+                        key: {$first: '$email'},
+                        name: {$first: '$name'},
+                        email: {$first: '$email'},
+                        totalCourse: {
+                            $sum: 1
+                        },
+                        totalPrice: {$sum: '$purchasedCurses.price'},
+
+                    }
+                },
+                {
+                    $project: {
+                        _id: '$_id._id',
+                        name: '$name',
+                        email: '$email',
+                        totalCourse: '$totalCourse',
+                        profit: '$totalPrice',
+                    }
+                },
+                {
+                    $out: {
+                        db: 'test',
+                        coll: 'clients_statistic_cache'
+                    }
+                }
+
+            ]
+        );
+
+        console.log(await ClientsStatisticCache.find())
+
+        return data;
     }
 
 }

@@ -1,5 +1,5 @@
 import {Injectable} from "@angular/core";
-import {HttpClient, HttpParams} from "@angular/common/http";
+import {HttpClient} from "@angular/common/http";
 import {BuyInterface} from "./buy.interface";
 
 @Injectable({
@@ -16,15 +16,9 @@ export class BuyCourseService {
   public buyCourse(data: BuyInterface) {
 
     const id = data.uuid;
-    // const params = new HttpParams({
-    //   fromObject: {
-    //     uuid: id
-    //   }
-    // });
 
     let options = {
       headers: {'Content-Type': 'application/json'},
-      // params,
     };
 
     const body = {

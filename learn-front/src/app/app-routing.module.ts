@@ -7,6 +7,7 @@ import {EditCourseComponent} from "./edit-course/edit-course.component";
 import {CreateCourseComponent} from "./create-course/create-course.component";
 import {StrongSearchComponent} from "./strong-search/strong-search.component";
 import {AggregationComponent} from "./aggregation/aggregation.component";
+import {ClientsComponent} from "./clients/clients.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -15,6 +16,7 @@ const routes: Routes = [
   {path: 'course/:uid', component: CourseComponent},
   {path: 'edit/:uid', component: EditCourseComponent},
   {path: 'aggregation', component: AggregationComponent},
+  {path: 'clients', component: ClientsComponent},
   {path: '**', component: PageNotFoundComponent},
 ];
 

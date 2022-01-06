@@ -16,6 +16,7 @@ import {ListCoursesComponent} from './aggregation/list-courses/list-courses.comp
 import {PriceInfoComponent} from './aggregation/price-info/price-info.component';
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import { BuyCourseComponent } from './course/buy-course/buy-course.component';
+import { ClientsComponent } from './clients/clients.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { BuyCourseComponent } from './course/buy-course/buy-course.component';
     PriceInfoComponent,
     PageNotFoundComponent,
     BuyCourseComponent,
+    ClientsComponent,
   ],
   imports: [
     BrowserModule,
