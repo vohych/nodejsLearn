@@ -1,7 +1,10 @@
 export interface ClientInterface {
+  _id: string,
   name: string;
   email: string;
-  totalCourse: string;
-  profit: string;
+  totalCourse: number;
+  profit: number;
+  lastModifiedDate: Date;
+  modify: string;
 }
 

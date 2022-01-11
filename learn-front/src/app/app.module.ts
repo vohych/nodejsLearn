@@ -17,6 +17,8 @@ import {PriceInfoComponent} from './aggregation/price-info/price-info.component'
 import {PageNotFoundComponent} from "./page-not-found/page-not-found.component";
 import { BuyCourseComponent } from './course/buy-course/buy-course.component';
 import { ClientsComponent } from './clients/clients.component';
+import { ClientComponent } from './clients/client/client.component';
+import { CreateUserComponent } from './create-user/create-user.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,8 @@ import { ClientsComponent } from './clients/clients.component';
     PageNotFoundComponent,
     BuyCourseComponent,
     ClientsComponent,
+    ClientComponent,
+    CreateUserComponent,
   ],
   imports: [
     BrowserModule,

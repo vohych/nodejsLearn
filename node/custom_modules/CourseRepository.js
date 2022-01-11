@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const Course = require('../modeles/course');
+const User = require('../modeles/user');
 const Client = require('../modeles/client');
 const ClientsStatisticCache = require('../modeles/save_group_client');
 const {Schema, model} = require('mongoose');
@@ -137,15 +138,15 @@ class CourseRepository {
     }
 
     async getClients() {
-//        console.log(await Client.find().deleteMany())
-
+//        return console.log(await ClientsStatisticCache.find().deleteMany())
         const cached = await ClientsStatisticCache.find();
 
-        if (!!cached) {
+        if (cached.length) {
             return cached;
         }
+        console.log('New schema')
 
-        const data = await Client.aggregate(
+        await Client.aggregate(
             [
                 {
                     $unwind: {
@@ -173,6 +174,7 @@ class CourseRepository {
                         email: '$email',
                         totalCourse: '$totalCourse',
                         profit: '$totalPrice',
+                        lastModifiedDate: new Date(),
                     }
                 },
                 {
@@ -184,10 +186,17 @@ class CourseRepository {
 
             ]
         );
+        return await this.getClients()
 
-        console.log(await ClientsStatisticCache.find())
-            //need clear collection five minutes later
-        return data;
+    }
+
+    async createUser(first_name = null, last_name = null, patronymic = null, password = null, email = null, birthday = null) {
+        await User.create(first_name, last_name, patronymic, password, email, birthday)
+    }
+
+    async migratingClientToUser() {
+
+//        console.log()
     }
 
 }

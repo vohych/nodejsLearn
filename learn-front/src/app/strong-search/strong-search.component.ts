@@ -4,8 +4,8 @@ import {StrongSearchForm} from "./strong-search-form";
 import {SearchInterface} from "./search.interface";
 
 enum SearchTypeEnum {
-  STRICT='strict',
-  FLEX= 'flex'
+  STRICT = 'strict',
+  FLEX = 'flex'
 }
 
 @Component({
@@ -28,7 +28,7 @@ export class StrongSearchComponent implements OnInit {
 
   public ngOnInit(): void {
     this.searchEventChange();
-}
+  }
 
   public searchEventChange() {
     this.service.search(this.form.value, this.searchType).subscribe(data => {
@@ -44,4 +44,5 @@ export class StrongSearchComponent implements OnInit {
     }
     this.searchEventChange();
   }
+
 }

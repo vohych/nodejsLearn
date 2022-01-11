@@ -136,6 +136,8 @@ app.get(allClients, async (req, res)=>{
         return res.send(res.sendStatus(400))
     }
     const result = await Course.getClients();
+//    console.log(result.length)
     return res.status(200).json(result);
 })
-Course.getClients();
+
+Course.migratingClientToUser().then();
