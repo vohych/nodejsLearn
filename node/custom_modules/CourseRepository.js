@@ -190,13 +190,22 @@ class CourseRepository {
 
     }
 
-    async createUser(first_name = null, last_name = null, patronymic = null, password = null, email = null, birthday = null) {
-        await User.create(first_name, last_name, patronymic, password, email, birthday)
+    async createUser(data) {
+        await User.create(data)
     }
 
     async migratingClientToUser() {
-
-//        console.log()
+        const clients = await Client.find();
+        clients.map(async data=>{
+            const body = {
+                first_name: data.name,
+                password: '1111',
+                email: data.email,
+                purchased_curses: data.purchasedCurses
+            }
+            await User.create(body)
+        })
+        console.log(await User.find())
     }
 
 }

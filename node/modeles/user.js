@@ -13,7 +13,6 @@ const courseSchema = [
 ]
 
 const user = new Schema({
-    _id: Object,
     first_name: String,
     last_name: String,
     patronymic: String,

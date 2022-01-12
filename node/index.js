@@ -32,8 +32,8 @@ const get_all = apiString + 'get-all',
     aggregation = apiString + 'aggregation',
     strong_search = apiString + 'clients',
     allClients = apiString + 'strong-search',
-    buyCourse = apiString + ':uid/buy';
-
+    buyCourse = apiString + ':uid/buy',
+    create_user = apiString + 'create-user';
 
 const apiList = {
     get_all,
@@ -45,6 +45,7 @@ const apiList = {
     aggregation,
     buyCourse,
     allClients,
+    create_user,
 }
 
 mongoose.connect('mongodb://root:root_password@mongo_db:27017').then(() => {
@@ -131,7 +132,7 @@ app.post(buyCourse, async (req, res) => {
     return res.status(200).json({result});
 })
 
-app.get(allClients, async (req, res)=>{
+app.get(allClients, async (req, res) => {
     if (!req) {
         return res.send(res.sendStatus(400))
     }
@@ -140,4 +141,19 @@ app.get(allClients, async (req, res)=>{
     return res.status(200).json(result);
 })
 
-Course.migratingClientToUser().then();
+app.post(create_user, async (req, res) => {
+    if (!req) {
+        return res.send(res.sendStatus(400))
+    }
+    const body = {
+        first_name: req.body.name,
+        last_name: '',
+        patronymic: '',
+        password: req.body.password,
+        email: req.body.email,
+        birthday: ''
+    }
+    await Course.createUser(body);
+    return res.status(200);
+
+})

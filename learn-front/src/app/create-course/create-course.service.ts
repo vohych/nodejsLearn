@@ -24,7 +24,7 @@ export class CreateCourseService {
       price: data.price,
     }
 
-    return this.http.post<any>(`http://localhost:8080/api/create`,
+    return this.http.post<any>(`http://localhost:8080/api/create-course`,
       body,
       options
     )
