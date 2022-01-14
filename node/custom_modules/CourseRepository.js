@@ -1,9 +1,10 @@
-const mongoose = require("mongoose");
+require("mongoose");
 const Course = require('../modeles/course');
 const User = require('../modeles/user');
 const Client = require('../modeles/client');
 const ClientsStatisticCache = require('../modeles/save_group_client');
-const {Schema, model} = require('mongoose');
+const jwt = require('jsonwebtoken');
+const JWT_Secret = 'my_secret_key';
 
 class CourseRepository {
 
@@ -194,9 +195,22 @@ class CourseRepository {
         await User.create(data)
     }
 
+    async loginUser(data) {
+        const result = await User.findOne({$and: [{email: data.email}, {password: data.password}]})
+
+        if (!!result) {
+            const token = jwt.sign({email: result.email, password: result.password}, JWT_Secret);
+            await User.updateOne({_id: result._id}, {token})
+//            console.log(result)
+            return result;
+        } else {
+            return false
+        }
+    }
+
     async migratingClientToUser() {
         const clients = await Client.find();
-        clients.map(async data=>{
+        clients.map(async data => {
             const body = {
                 first_name: data.name,
                 password: '1111',

@@ -10,6 +10,7 @@ import {AggregationComponent} from "./aggregation/aggregation.component";
 import {ClientsComponent} from "./clients/clients.component";
 import {ClientComponent} from "./clients/client/client.component";
 import {CreateUserComponent} from "./create-user/create-user.component";
+import {LoginUserComponent} from "./login-user/login-user.component";
 
 const routes: Routes = [
   {path: '', component: HomeComponent},
@@ -20,6 +21,7 @@ const routes: Routes = [
   {path: 'aggregation', component: AggregationComponent},
   {path: 'clients', component: ClientsComponent},
   {path: 'create-user', component: CreateUserComponent},
+  {path: 'login-user', component: LoginUserComponent},
   {path: 'clients/:uid', component: ClientComponent},
   {path: '**', component: PageNotFoundComponent},
 ];

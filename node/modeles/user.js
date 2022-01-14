@@ -21,6 +21,7 @@ const user = new Schema({
     purchased_curses: courseSchema,
     basket: courseSchema,
     birthday: Date,
+    token: String,
 })
 
 module.exports = model('User', user, 'users');

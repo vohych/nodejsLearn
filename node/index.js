@@ -9,11 +9,13 @@ const uuid = require('uuid');
 
 const bodyParser = require('body-parser');
 const mongoose = require("mongoose");
+
 app.use(bodyParser.json());
 
 router.post('');
 router.post('/edit/:uid');
 router.post('/api/create');
+router.post('/api/login-user');
 
 const PORT = process.env.PORT || 8080;
 
@@ -32,6 +34,7 @@ const get_all = apiString + 'get-all',
     aggregation = apiString + 'aggregation',
     strong_search = apiString + 'clients',
     allClients = apiString + 'strong-search',
+    userAuth = apiString + 'login-user',
     buyCourse = apiString + ':uid/buy',
     create_user = apiString + 'create-user';
 
@@ -46,20 +49,25 @@ const apiList = {
     buyCourse,
     allClients,
     create_user,
+    userAuth,
 }
 
-mongoose.connect('mongodb://root:root_password@mongo_db:27017').then(() => {
-    console.log('Connection established');
-});
+try{
+    mongoose.connect('mongodb://root:root_password@mongo_db:27017').then();
+}catch (e) {
+    console.log(e)
+}
 
 app.get('/', (req, res) => {
     res.send(apiList)
 })
+
 app.get(get_all, (req, res) => {
     Course.getAll().then(data => {
         res.send(data);
     })
 })
+
 app.get(get_one, (req, res) => {
     Course.getAll().then(() => {
         res.send({get_one: get_one + ':uid'});
@@ -157,3 +165,26 @@ app.post(create_user, async (req, res) => {
     return res.status(200);
 
 })
+
+app.post(userAuth, async (req,res)=>{
+    if (!req) {
+        return res.send(res.sendStatus(400))
+    }
+    const data = {
+        email: req.body.email,
+        password: req.body.password
+    }
+    const result = await Course.loginUser(data);
+    let clientResult;
+
+    if (result){
+//        console.log(result);
+        clientResult = {user: result ,status: {code: 200}}
+    }else {
+        clientResult = {user: null, status: {code: 404}}
+    }
+    return res.status(200).json(clientResult)
+})
+
+const auth = require("./middleware/login-user");
+app.use("middleware/login-user", auth)

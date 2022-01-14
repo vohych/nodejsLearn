@@ -19,6 +19,8 @@ import { BuyCourseComponent } from './course/buy-course/buy-course.component';
 import { ClientsComponent } from './clients/clients.component';
 import { ClientComponent } from './clients/client/client.component';
 import { CreateUserComponent } from './create-user/create-user.component';
+import { LoginUserComponent } from './login-user/login-user.component';
+import { UserSccountComponent } from './user-account/user-sccount.component';
 
 @NgModule({
   declarations: [
@@ -37,6 +39,8 @@ import { CreateUserComponent } from './create-user/create-user.component';
     ClientsComponent,
     ClientComponent,
     CreateUserComponent,
+    LoginUserComponent,
+    UserSccountComponent,
   ],
   imports: [
     BrowserModule,
