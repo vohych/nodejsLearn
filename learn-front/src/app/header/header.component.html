@@ -1,12 +1,14 @@
 <header class="header">
   <ul>
-    <li><a routerLink="/">Courses</a></li>
-    <li><a routerLink="/create-course">Create Course</a></li>
-    <li><a routerLink="/strong-search">Search</a></li>
-    <li><a routerLink="/aggregation">Aggregation</a></li>
-    <li><a routerLink="/clients">Clients</a></li>
-    <li><a routerLink="/create-user">Create User</a></li>
-    <li><a routerLink="/login-user">Login User</a></li>
+    <li *ngIf="tokenState"><a routerLink="{{links.HOME}}">Courses</a></li>
+    <li *ngIf="tokenState"><a routerLink="{{links.CREATE_COURSE}}">Create Course</a></li>
+    <li *ngIf="tokenState"><a routerLink="{{links.STRONG_SEARCH}}">Search</a></li>
+    <li *ngIf="tokenState"><a routerLink="{{links.AGGREGATION}}">Aggregation</a></li>
+    <li *ngIf="tokenState"><a routerLink="{{links.CLIENTS}}">Clients</a></li>
+    <li *ngIf="!tokenState"><a routerLink="{{links.CREATE_USER}}">Create User</a></li>
+    <li *ngIf="!tokenState"><a routerLink="{{links.LOGIN_USER}}">Login User</a></li>
+    <li *ngIf="tokenState" (click)="logout()">Logout User</li>
   </ul>
+  {{tokenState}}
 </header>
 

@@ -58,6 +58,12 @@ try{
     console.log(e)
 }
 
+
+const auth = require("./middleware/login-user");
+const routers = express.Router();
+
+app.use(auth);
+
 app.get('/', (req, res) => {
     res.send(apiList)
 })
@@ -186,5 +192,3 @@ app.post(userAuth, async (req,res)=>{
     return res.status(200).json(clientResult)
 })
 
-const auth = require("./middleware/login-user");
-app.use("middleware/login-user", auth)

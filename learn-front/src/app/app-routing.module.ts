@@ -11,19 +11,65 @@ import {ClientsComponent} from "./clients/clients.component";
 import {ClientComponent} from "./clients/client/client.component";
 import {CreateUserComponent} from "./create-user/create-user.component";
 import {LoginUserComponent} from "./login-user/login-user.component";
+import {CheckTokenGuard} from "./check-token.guard";
 
 const routes: Routes = [
-  {path: '', component: HomeComponent},
-  {path: 'create-course', component: CreateCourseComponent},
-  {path: 'strong-search', component: StrongSearchComponent},
-  {path: 'course/:uid', component: CourseComponent},
-  {path: 'edit/:uid', component: EditCourseComponent},
-  {path: 'aggregation', component: AggregationComponent},
-  {path: 'clients', component: ClientsComponent},
-  {path: 'create-user', component: CreateUserComponent},
-  {path: 'login-user', component: LoginUserComponent},
-  {path: 'clients/:uid', component: ClientComponent},
-  {path: '**', component: PageNotFoundComponent},
+  {
+    path: 'login-user',
+    component: LoginUserComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: '',
+    component: HomeComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'create-course',
+    component: CreateCourseComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'strong-search',
+    component: StrongSearchComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'course/:uid',
+    component: CourseComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'edit/:uid',
+    component: EditCourseComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'aggregation',
+    component: AggregationComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'clients',
+    component: ClientsComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: 'create-user',
+    component: CreateUserComponent,
+    canActivate: [CheckTokenGuard]
+  },
+
+  {
+    path: 'clients/:uid',
+    component: ClientComponent,
+    canActivate: [CheckTokenGuard]
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent,
+    canActivate: [CheckTokenGuard]
+  },
 ];
 
 @NgModule({

@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {AppRoutingModule} from './app-routing.module';
 import {AppComponent} from './app.component';
-import {HttpClientModule} from "@angular/common/http";
+import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {HeaderComponent} from './header/header.component';
 import {CourseComponent} from './course/course.component';
 import {HomeComponent} from './home/home.component';
@@ -21,6 +21,7 @@ import { ClientComponent } from './clients/client/client.component';
 import { CreateUserComponent } from './create-user/create-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { UserSccountComponent } from './user-account/user-sccount.component';
+import {CheckTokenInterceptor} from "./check-token.interceptor";
 
 @NgModule({
   declarations: [
@@ -50,7 +51,11 @@ import { UserSccountComponent } from './user-account/user-sccount.component';
     FormsModule,
     ReactiveFormsModule,
   ],
-  providers: [],
+  providers: [{
+    provide: HTTP_INTERCEPTORS,
+    useClass: CheckTokenInterceptor,
+    multi: true
+  }],
   bootstrap: [AppComponent]
 })
 export class AppModule {

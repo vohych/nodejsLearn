@@ -1,4 +1,4 @@
-export interface LoginUserInterface{
+export interface LoginUserInterface {
   _id: string;
   status: {
     code: number
