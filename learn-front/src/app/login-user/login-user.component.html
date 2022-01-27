@@ -1,0 +1,7 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="text" placeholder="email" [formControl]="form.email">
+  <input type="text" placeholder="password" [formControl]="form.password">
+  <input type="submit" value="Login">
+</form>
+
+<span *ngIf="!validation">Oops</span>

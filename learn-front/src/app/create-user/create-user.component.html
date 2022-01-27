@@ -1,0 +1,6 @@
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()">
+  <input type="text" [formControl]="form.name" name="name" placeholder="name">
+  <input type="text" [formControl]="form.email" name="email" placeholder="email">
+  <input type="text" [formControl]="form.password" name="password" placeholder="password">
+  <button type="submit">Create</button>
+</form>
