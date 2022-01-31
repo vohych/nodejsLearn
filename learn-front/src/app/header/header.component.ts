@@ -1,14 +1,14 @@
 import {Component, OnInit} from '@angular/core';
 import {CheckTokenService} from "../check-token.service";
 import {RoutingEnum} from "../routing.enum";
-import {HttpClient} from "@angular/common/http";
-import {ActivatedRoute, Router, RouterLink, RouterLinkActive} from "@angular/router";
+import {AuthService} from "../auth.service";
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
+
 export class HeaderComponent implements OnInit {
 
   public tokenState: boolean = false;
@@ -16,8 +16,9 @@ export class HeaderComponent implements OnInit {
 
   constructor(
     private checkToken: CheckTokenService,
-    private router: Router
-  ) {}
+    private authService: AuthService,
+  ) {
+  }
 
   ngOnInit() {
     this.checkToken.stateEmitter.subscribe(data => {
@@ -26,9 +27,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public logout() {
-    this.router.navigate([RoutingEnum.LOGIN_USER])
-    this.checkToken.stateEmitter.emit(false);
-    localStorage.setItem('auth_token', '');
-    localStorage.setItem('refresh_token', '');
+    this.authService.logout();
   }
+
 }

@@ -199,13 +199,18 @@ class CourseRepository {
         const result = await User.findOne({$and: [{email: data.email}, {password: data.password}]})
 
         if (!!result) {
-            const token = jwt.sign({email: result.email, password: result.password}, JWT_Secret);
-            await User.updateOne({_id: result._id}, {token})
-//            console.log(result)
+            const access_token = jwt.sign({email: result.email, password: result.password}, JWT_Secret);
+            const refresh_token = jwt.sign({email: result.email, password: result.password}, access_token);
+            await User.updateOne({_id: result._id}, {access_token, refresh_token})
+            console.log(await User.find())
             return result;
         } else {
             return false
         }
+    }
+
+    async users() {
+        return  User.find({});
     }
 
     async migratingClientToUser() {

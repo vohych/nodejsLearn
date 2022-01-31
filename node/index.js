@@ -35,6 +35,8 @@ const get_all = apiString + 'get-all',
     strong_search = apiString + 'clients',
     allClients = apiString + 'strong-search',
     userAuth = apiString + 'login-user',
+    userLogout = apiString + 'logout',
+    users = apiString + 'users',
     buyCourse = apiString + ':uid/buy',
     create_user = apiString + 'create-user';
 
@@ -50,14 +52,15 @@ const apiList = {
     allClients,
     create_user,
     userAuth,
+    users,
+    userLogout,
 }
 
-try{
+try {
     mongoose.connect('mongodb://root:root_password@mongo_db:27017').then();
-}catch (e) {
+} catch (e) {
     console.log(e)
 }
-
 
 const auth = require("./middleware/login-user");
 const routers = express.Router();
@@ -172,7 +175,7 @@ app.post(create_user, async (req, res) => {
 
 })
 
-app.post(userAuth, async (req,res)=>{
+app.post(userAuth, async (req, res) => {
     if (!req) {
         return res.send(res.sendStatus(400))
     }
@@ -183,12 +186,31 @@ app.post(userAuth, async (req,res)=>{
     const result = await Course.loginUser(data);
     let clientResult;
 
-    if (result){
-//        console.log(result);
-        clientResult = {user: result ,status: {code: 200}}
-    }else {
+    if (result) {
+        clientResult = {user: result, status: {code: 200}}
+    } else {
         clientResult = {user: null, status: {code: 404}}
     }
     return res.status(200).json(clientResult)
 })
+
+app.get(users, async (req, res) => {
+
+    if (!req) {
+        return res.send(res.sendStatus(400));
+    }
+    const result = await Course.users();
+
+    return res.status(200).json(result);
+})
+
+app.post(userLogout, async (req, res) => {
+
+    if (!req) {
+        return res.send(res.sendStatus(400));
+    }
+
+    return res.status(200).json({});
+})
+
 

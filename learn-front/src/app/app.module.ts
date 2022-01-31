@@ -22,6 +22,7 @@ import { CreateUserComponent } from './create-user/create-user.component';
 import { LoginUserComponent } from './login-user/login-user.component';
 import { UserSccountComponent } from './user-account/user-sccount.component';
 import {CheckTokenInterceptor} from "./check-token.interceptor";
+import { UsersComponent } from './users/users.component';
 
 @NgModule({
   declarations: [
@@ -42,6 +43,7 @@ import {CheckTokenInterceptor} from "./check-token.interceptor";
     CreateUserComponent,
     LoginUserComponent,
     UserSccountComponent,
+    UsersComponent,
   ],
   imports: [
     BrowserModule,

@@ -4,6 +4,7 @@ export interface LoginUserInterface {
     code: number
   };
   user: {
-    token: string
+    access_token: string
+    refresh_token: string
   };
 }

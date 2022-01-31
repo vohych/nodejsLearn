@@ -6,4 +6,5 @@ export enum RoutingEnum {
   CLIENTS = '/clients',
   CREATE_USER = '/create-user',
   LOGIN_USER = '/login-user',
+  USERS = '/users',
 }

@@ -11,64 +11,71 @@ import {ClientsComponent} from "./clients/clients.component";
 import {ClientComponent} from "./clients/client/client.component";
 import {CreateUserComponent} from "./create-user/create-user.component";
 import {LoginUserComponent} from "./login-user/login-user.component";
-import {CheckTokenGuard} from "./check-token.guard";
+import {AuthGuard} from "./auth.guard";
+import {UnAuthGuard} from "./un-auth.guard";
+import {UsersComponent} from "./users/users.component";
 
 const routes: Routes = [
   {
     path: 'login-user',
     component: LoginUserComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [UnAuthGuard]
   },
   {
     path: '',
     component: HomeComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-course',
     component: CreateCourseComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'strong-search',
     component: StrongSearchComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'course/:uid',
     component: CourseComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'edit/:uid',
     component: EditCourseComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'aggregation',
     component: AggregationComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'clients',
     component: ClientsComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
   {
     path: 'create-user',
     component: CreateUserComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [UnAuthGuard]
   },
 
   {
     path: 'clients/:uid',
     component: ClientComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'users',
+    component: UsersComponent,
+    canActivate: [AuthGuard]
   },
   {
     path: '**',
     component: PageNotFoundComponent,
-    canActivate: [CheckTokenGuard]
+    canActivate: [AuthGuard]
   },
 ];
 
