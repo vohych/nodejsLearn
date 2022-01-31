@@ -6,9 +6,9 @@
     <li *ngIf="tokenState"><a routerLink="{{links.AGGREGATION}}">Aggregation</a></li>
     <li *ngIf="tokenState"><a routerLink="{{links.CLIENTS}}">Clients</a></li>
     <li *ngIf="tokenState"><a routerLink="{{links.USERS}}">Users</a></li>
-    <li *ngIf="tokenState" (click)="logout()">Logout User</li>
     <li *ngIf="!tokenState"><a routerLink="{{links.CREATE_USER}}">Create User</a></li>
     <li *ngIf="!tokenState"><a routerLink="{{links.LOGIN_USER}}">Login User</a></li>
+    <li *ngIf="tokenState" (click)="logout()">Logout User</li>
   </ul>
 </header>
 
